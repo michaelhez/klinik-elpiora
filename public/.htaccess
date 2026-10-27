@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Block direct access to sensitive files
+<FilesMatch "\.(env|log|sql|md)$">
+    Require all denied
+</FilesMatch>
+
+# Serve existing files/directories directly (css, js, images)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route everything else through the front controller
+RewriteRule ^ index.php [L]
